@@ -14,7 +14,7 @@ public class InvalidRepositoryOperation extends Exception{
 		this.reason = reason;
 	}
 	
-	String what() {
+	public String what() {
 		return reason;
 	}
 	
