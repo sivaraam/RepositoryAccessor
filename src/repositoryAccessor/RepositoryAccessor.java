@@ -69,7 +69,7 @@ public class RepositoryAccessor {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
                 String line;
                 while((line = reader.readLine()) != null) {
-                    fileContents.append(line+"\n");
+                    fileContents.append(line).append("\n");
                 }        
         }  
         catch (IOException ex) {
