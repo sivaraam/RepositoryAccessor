@@ -71,7 +71,7 @@ public class RepositoryAccessorTest {
     @Test
     public void testReadFromFile() throws Exception {
         System.out.println("readFromFile");
-        String source = "readFile";
+        String source = "folder/readFile";
         String expResult = "Hello World\n\tHello\t1234\n";
         System.out.println(expResult);
         StringBuilder result = instance.readFromFile(source);
