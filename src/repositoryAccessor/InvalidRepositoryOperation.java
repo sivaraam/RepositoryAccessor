@@ -1,9 +1,12 @@
 package repositoryAccessor;
 
+/**
+ * Class thrown by <code> RepositoryAccessor </code> in cases of an exception.
+ *
+ * @author Kaartic Sivaraam
+ */
 public class InvalidRepositoryOperation extends Exception{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	public InvalidRepositoryOperation() {
