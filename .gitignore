@@ -1,3 +1,3 @@
 *.class
 build/
-test/testFiles/
+test/testFiles/test*
