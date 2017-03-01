@@ -47,36 +47,36 @@ public class RepositoryAccessor {
 	
     /**
      * This method reads contents from the <code> source </code> and returns the
-     * contents as a <code> String </code> array.
+     * contents as a <code> StringBuilder </code>.
      * 
      * @param source It is the path of the source file relative to the {@link #basePath}
-     * @return <code> String[] </code> The contents of the file are returned as 
-     * a <code> String </code> array with each line represented by an array element.
+     * @return <code> StringBuilder </code> The contents of the file are returned as 
+     * a <code> StringBuilder </code>.
      * @throws InvalidRepositoryOperation This method throws this class when,
      * <ul>
      *         <li> the file does not exist
      *         <li> an <code> IOException </code> occurs during a file operation
      * </ul>
      */
-    public String[] readFromFile(String source) throws InvalidRepositoryOperation {
+    public StringBuilder readFromFile(String source) throws InvalidRepositoryOperation {
         Path sourcePath = Paths.get(basePath.toString(), source);
 	if(Files.notExists(sourcePath))
             throw new InvalidRepositoryOperation ("File does not exist");
 	
-        List<String> lines = new ArrayList<>();
+        StringBuilder fileContents = new StringBuilder();
 	
         try(InputStream in = Files.newInputStream(sourcePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
                 String line;
                 while((line = reader.readLine()) != null) {
-                    lines.add(line);
+                    fileContents.append(line+"\n");
                 }        
         }  
         catch (IOException ex) {
             throw new InvalidRepositoryOperation ("IOException when trying to write to file\n"+ex.getMessage());
         }
        
-        return lines.toArray(new String[lines.size()]);
+        return fileContents;
     }
     
     /**

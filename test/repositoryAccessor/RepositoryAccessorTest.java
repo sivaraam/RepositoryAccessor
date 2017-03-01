@@ -21,7 +21,8 @@ public class RepositoryAccessorTest {
     
     public RepositoryAccessorTest() {      
         try {
-            instance = new RepositoryAccessor("/home/unique/netbeans/RepositoryAccessor/test/testFiles");
+            // TODO: Change the path to a relative one
+            instance = new RepositoryAccessor("/mnt/8EC817CBC817B087/source/netbeans/RepositoryAccessor/test/testFiles");
         } catch (InvalidRepositoryOperation ex) {
             Logger.getLogger(RepositoryAccessorTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,9 +72,11 @@ public class RepositoryAccessorTest {
     public void testReadFromFile() throws Exception {
         System.out.println("readFromFile");
         String source = "readFile";
-        String[] expResult = {"Hello World"};
-        String[] result = instance.readFromFile(source);
-        assertArrayEquals(expResult, result);
+        String expResult = "Hello World\n\tHello\t1234\n";
+        System.out.println(expResult);
+        StringBuilder result = instance.readFromFile(source);
+        System.out.println(result);
+        assertEquals(expResult, result.toString());
                
     }
     
