@@ -1,4 +1,4 @@
-package repositoryaccessor;
+package repositoryAccessor;
 
 public class InvalidRepositoryOperation extends Exception{
 	/**
@@ -6,17 +6,18 @@ public class InvalidRepositoryOperation extends Exception{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	InvalidRepositoryOperation() {
+	public InvalidRepositoryOperation() {
 		reason = "Unknown reason";
 	}
 	
-	InvalidRepositoryOperation(String reason) {
+	public InvalidRepositoryOperation(String reason) {
 		this.reason = reason;
 	}
 	
-	public String what() {
-		return reason;
+        @Override
+	public String getMessage() {
+            return reason+((super.getMessage() != null) ? super.getMessage() : "");
 	}
 	
-	String reason;
+	private String reason;
 }
