@@ -1,4 +1,4 @@
-package repositoryaccessor;
+package repositoryAccessor;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -10,7 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import static java.nio.file.StandardOpenOption.WRITE;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +51,11 @@ public class RepositoryAccessor {
      * @param source It is the path of the source file relative to the {@link #basePath}
      * @return {@code String[]} The contents of the file are returned as a {@code String} array,
      * with each line represented by an array element.
-     * @throws {@code InvalidRepositoryOperation}This method throws this class when,
+     * @throws InvalidRepositoryOperation This method throws this class when,
      *         1. the file does not exist
      *         2. an {@code IOException} occurs during a file operation
      */
-    public String[] readContentsFromFile(String source) throws InvalidRepositoryOperation {
+    public String[] readFromFile(String source) throws InvalidRepositoryOperation {
         Path sourcePath = Paths.get(basePath.toString(), source);
 	if(Files.notExists(sourcePath))
             throw new InvalidRepositoryOperation ("File does not exist");
@@ -77,7 +78,38 @@ public class RepositoryAccessor {
     
     /**
      * This method writes the contents of the provided {@code String}, to the 
-     * {@code destination}.
+     * {@code destination} which is assumed to, not exist before invocation.
+     * 
+     * @param destination The path of the destination relative to {@link basePath}
+     * @param contentsToWrite The {@code String} containing the contents to be
+     * written to the file.
+     * 
+     * @throws InvalidRepositoryOperation This method throws when,
+     *         1. the Parent of the file doesn't exist
+     *         2. file does exists previously
+     *         3. an {@code IOException} occurs during File write operation
+     */
+    public void writeToNewFile(String destination, String contentsToWrite) throws InvalidRepositoryOperation {
+        Path destinationPath = Paths.get(basePath.toString(), destination);
+        
+        if(Files.notExists(destinationPath.getParent())) {
+            throw new InvalidRepositoryOperation ("Parent of file does not exist");
+        }
+                
+        byte[] contentsAsBytes = contentsToWrite.getBytes();
+        
+	try ( OutputStream out = new BufferedOutputStream(
+                Files.newOutputStream(destinationPath, CREATE_NEW))) {
+            out.write(contentsAsBytes, 0, contentsAsBytes.length);
+        }
+        catch (IOException ex) {
+            throw new InvalidRepositoryOperation ("IOException when trying to write to file\n"+ex.getMessage());
+        }
+    }
+    
+    /**
+     * This method writes the contents of the provided {@code String}, to the 
+     * {@code destination} which is assumed to, exist before invocation.
      * 
      * @param destination The path of the destination relative to {@link basePath}
      * @param contentsToWrite The {@code String} containing the contents to be
@@ -87,23 +119,23 @@ public class RepositoryAccessor {
      *         1. the Parent of the file doesn't exist
      *         2. an {@code IOException} occurs during File write operation
      */
-    public void writeStringToFile(String destination, String contentsToWrite) throws InvalidRepositoryOperation {
+     public void appendToFile(String destination, String contentsToWrite) throws InvalidRepositoryOperation {
         Path destinationPath = Paths.get(basePath.toString(), destination);
         
         if(Files.notExists(destinationPath.getParent())) {
             throw new InvalidRepositoryOperation ("Parent of file does not exist");
         }
+        
         byte[] contentsAsBytes = contentsToWrite.getBytes();
         
 	try ( OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(destinationPath, CREATE, APPEND))) {
+                Files.newOutputStream(destinationPath, WRITE, APPEND))) {
             out.write(contentsAsBytes, 0, contentsAsBytes.length);
         }
         catch (IOException ex) {
-            throw new InvalidRepositoryOperation ("IOException when trying to write to file\n"+ex.getMessage());
+            throw new InvalidRepositoryOperation ("IOException when trying to write to file\n" + ex.getMessage());
         }
     }
-    
     /**
      * The member that stores the base path of the repository
      */
