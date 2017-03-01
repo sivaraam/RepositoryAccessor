@@ -1,4 +1,4 @@
-package repositoryAccessor;
+package repositoryaccessor;
 
 public class InvalidRepositoryOperation extends Exception{
 	/**

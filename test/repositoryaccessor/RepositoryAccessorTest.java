@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package repositoryAccessor;
+package repositoryaccessor;
 
+import repositoryaccessor.RepositoryAccessor;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

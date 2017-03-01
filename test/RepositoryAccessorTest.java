@@ -7,8 +7,8 @@
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import repositoryAccessor.InvalidRepositoryOperation;
-import repositoryAccessor.RepositoryAccessor;
+import repositoryaccessor.InvalidRepositoryOperation;
+import repositoryaccessor.RepositoryAccessor;
 
 /**
  *

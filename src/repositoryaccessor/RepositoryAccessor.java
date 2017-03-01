@@ -1,4 +1,4 @@
-package repositoryAccessor;
+package repositoryaccessor;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
