@@ -82,7 +82,8 @@ public class RepositoryAccessor {
     
     /**
      * This method writes the contents of the provided <code> String </code>, to the 
-     * <code> destination </code> which is, assumed to not exist before invocation.
+     * a file with the provided <code> fileName </code> which is, assumed to not
+     * exist before invocation.
      * 
      * @param fileName The <em> name of file </em> which is to be created. The 
      * file would be created in the base path.
