@@ -12,8 +12,6 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.WRITE;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class serves as a wrapper for the file operations provided by Java.
