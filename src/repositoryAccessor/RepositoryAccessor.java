@@ -2,10 +2,12 @@ package repositoryAccessor;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,8 +66,8 @@ public class RepositoryAccessor {
 	
         StringBuilder fileContents = new StringBuilder();
 	
-        try(InputStream in = Files.newInputStream(sourcePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
+        try( InputStream in = Files.newInputStream(sourcePath);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));) {
                 String line;
                 while((line = reader.readLine()) != null) {
                     fileContents.append(line).append("\n");
@@ -102,13 +104,10 @@ public class RepositoryAccessor {
             throw new InvalidRepositoryOperation ("Parent of file does not exist");
         }
                 
-        byte[] contentsAsBytes = contentsToWrite.getBytes();
-        
-	try ( OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(destinationPath, CREATE_NEW))) {
-            out.write(contentsAsBytes, 0, contentsAsBytes.length);
-        }
-        catch (IOException ex) {
+        try ( OutputStream out = Files.newOutputStream(destinationPath, CREATE_NEW); 
+              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));) {
+            writer.write(contentsToWrite);
+        }        catch (IOException ex) {
             throw new InvalidRepositoryOperation ("IOException when trying to write to file\n"+ex.getMessage());
         }
     }
@@ -141,9 +140,8 @@ public class RepositoryAccessor {
         }
         
         byte[] contentsAsBytes = contentsToWrite.getBytes();
-        
-	try ( OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(destinationPath, WRITE, APPEND))) {
+        try ( OutputStream out = Files.newOutputStream(destinationPath, WRITE, APPEND);
+              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"))) {
             out.write(contentsAsBytes, 0, contentsAsBytes.length);
         }
         catch (IOException ex) {

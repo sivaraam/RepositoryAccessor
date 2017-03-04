@@ -22,7 +22,7 @@ public class RepositoryAccessorTest {
     public RepositoryAccessorTest() {      
         try {
             // TODO: Change the path to a relative one
-            instance = new RepositoryAccessor("/mnt/8EC817CBC817B087/source/netbeans/RepositoryAccessor/test/testFiles");
+            instance = new RepositoryAccessor("G:\\source\\netbeans\\RepositoryAccessor\\test\\testFiles");
         } catch (InvalidRepositoryOperation ex) {
             Logger.getLogger(RepositoryAccessorTest.class.getName()).log(Level.SEVERE, null, ex);
         }
