@@ -17,10 +17,10 @@ public class InvalidRepositoryOperation extends Exception{
 		this.reason = reason;
 	}
 	
-        @Override
+    @Override
 	public String getMessage() {
             return reason+((super.getMessage() != null) ? super.getMessage() : "");
 	}
 	
-	private String reason;
+	String reason;
 }
